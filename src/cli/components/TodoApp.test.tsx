@@ -113,4 +113,16 @@ describe('TodoApp', () => {
     // Should change to Due Date sort
     expect(lastFrame()).toContain('[Due Date]');
   });
+
+  it('should handle Enter key for detailed view mode when no tasks exist', () => {
+    const { lastFrame, stdin } = render(<TodoApp />);
+    
+    // Press Enter when no tasks exist - should not crash
+    stdin.write('\r');
+    
+    // Should remain in list view
+    const output = lastFrame();
+    expect(output).toContain('TODO App');
+    expect(output).toContain('No tasks found');
+  });
 });

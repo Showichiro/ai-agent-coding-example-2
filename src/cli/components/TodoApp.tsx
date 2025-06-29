@@ -8,8 +8,9 @@ import { HelpFooter } from './HelpFooter';
 import { TaskForm } from './TaskForm';
 import { TaskPreview } from './TaskPreview';
 import { ToastNotification } from './ToastNotification';
+import { TaskDetailView } from './TaskDetailView';
 
-type AppMode = 'list' | 'create' | 'edit' | 'delete';
+type AppMode = 'list' | 'create' | 'edit' | 'delete' | 'detail';
 type FilterType = TaskStatus | 'all';
 type SortType = 'created' | 'dueDate';
 
@@ -118,6 +119,20 @@ export function TodoApp() {
         setSelectedIndex(0); // Reset selection when sort changes
         return;
       }
+      
+      if (key.return && displayedTasks.length > 0) {
+        // Enter detailed view mode
+        setMode('detail');
+        return;
+      }
+    }
+    
+    if (mode === 'detail') {
+      if (key.escape) {
+        // Exit detailed view mode
+        setMode('list');
+        return;
+      }
     }
   });
 
@@ -178,6 +193,14 @@ export function TodoApp() {
         task={editingTask}
         onSubmit={handleEditTask}
         onCancel={handleCancel}
+      />
+    );
+  }
+
+  if (mode === 'detail' && displayedTasks.length > 0) {
+    return (
+      <TaskDetailView
+        task={displayedTasks[selectedIndex]}
       />
     );
   }
