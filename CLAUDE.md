@@ -42,10 +42,24 @@ This project follows **TDD with Tidy First** workflow. The AI agent is expected 
 1. **Tidy First** (optional): Clean up existing code structure before adding features
 2. **Red**: Write a failing test that defines new behavior  
 3. **Green**: Write minimal code to make the test pass
-4. **Commit**: Immediately commit the behavioral change with a `feat:` or `fix:` message.
-5. **Refactor**: Improve code structure while keeping tests green. Commit structural changes with a `refactor:` or `tidy:` message.
+4. **Quality Check**: BEFORE committing, run all quality checks:
+   - `pnpm lint` - Biome linter with auto-fix
+   - `pnpm format` - Biome formatter
+   - `pnpm build` - TypeScript type checking
+   - `pnpm test` - Test suite execution
+5. **Commit**: Only after all quality checks pass, commit with a `feat:` or `fix:` message.
+6. **Refactor**: Improve code structure while keeping tests green. Commit structural changes with a `refactor:` or `tidy:` message.
 
 This cycle must be applied in the smallest possible increments. The agent should not wait for user prompts to commit or refactor.
+
+#### Pre-commit Quality Checklist
+**CRITICAL**: All commits must pass these checks before being committed:
+- ✅ `pnpm lint` - No linting errors
+- ✅ `pnpm format` - Code properly formatted  
+- ✅ `pnpm build` - No TypeScript errors
+- ✅ `pnpm test` - All tests passing
+
+**Never commit code that fails any of these quality checks.**
 
 ### Functional Programming Guidelines
 - Use **pure functions** for domain logic (no side effects)

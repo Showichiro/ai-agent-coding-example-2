@@ -10,6 +10,7 @@
     "lint": "biome lint --write .",
     "build": "tsc",
     "format": "biome format --write .",
+    "pre-commit": "pnpm lint && pnpm format && pnpm build && pnpm test",
     "example:ink": "tsx examples/01-ink.tsx",
     "example:counter": "tsx examples/02-counter.tsx",
     "example:suspense": "tsx examples/03-suspense.tsx",
