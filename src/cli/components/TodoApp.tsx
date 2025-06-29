@@ -6,6 +6,7 @@ import { TaskTable } from './TaskTable';
 import { FilterControls } from './FilterControls';
 import { HelpFooter } from './HelpFooter';
 import { TaskForm } from './TaskForm';
+import { TaskPreview } from './TaskPreview';
 
 type AppMode = 'list' | 'create' | 'edit' | 'delete';
 type FilterType = TaskStatus | 'all';
@@ -166,6 +167,11 @@ export function TodoApp() {
           selectedIndex={selectedIndex}
         />
       </Box>
+
+      {/* Task Preview */}
+      <TaskPreview 
+        task={displayedTasks.length > 0 ? displayedTasks[selectedIndex] : null} 
+      />
 
       {/* Help Footer */}
       <HelpFooter />

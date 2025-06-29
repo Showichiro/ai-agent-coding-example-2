@@ -77,4 +77,14 @@ describe('TodoApp', () => {
     // Should have proper structure
     expect(output?.length ?? 0).toBeGreaterThan(100); // Non-trivial output
   });
+
+  it('should display task preview pane', () => {
+    const { lastFrame } = render(<TodoApp />);
+    
+    const output = lastFrame();
+    
+    // Should show preview pane (even in empty state)
+    expect(output).toContain('Preview:');
+    expect(output).toContain('Select a task to view details');
+  });
 });
