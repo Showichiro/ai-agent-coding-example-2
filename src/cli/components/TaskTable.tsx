@@ -15,15 +15,15 @@ function formatDate(date: Date): string {
   });
 }
 
+const statusConfig = {
+  todo: { emoji: '⚪️', label: 'Todo' },
+  in_progress: { emoji: '🟡', label: 'In Progress' },
+  done: { emoji: '✅', label: 'Done' },
+} as const;
+
 function getStatusDisplay(status: Task['status']): string {
-  switch (status) {
-    case 'todo':
-      return '⚪️ Todo';
-    case 'in_progress':
-      return '🟡 In Progress';
-    case 'done':
-      return '✅ Done';
-  }
+  const config = statusConfig[status];
+  return `${config.emoji} ${config.label}`;
 }
 
 export function TaskTable({ tasks, selectedIndex }: TaskTableProps) {
