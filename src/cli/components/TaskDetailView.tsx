@@ -1,31 +1,12 @@
 import { Box, Text } from 'ink';
 import React from 'react';
-import { differenceInDays, isToday, isPast } from 'date-fns';
 import { Task } from '../../core/domain/task';
+import { formatRelativeDate } from '../utils/date-utils';
 
 interface TaskDetailViewProps {
   task: Task;
 }
 
-function formatRelativeDate(date: Date): string {
-  if (isToday(date)) {
-    return '今日';
-  }
-  
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  const targetDate = new Date(date);
-  targetDate.setHours(0, 0, 0, 0);
-  
-  const daysDiff = differenceInDays(targetDate, today);
-  
-  if (daysDiff > 0) {
-    return `あと${daysDiff}日`;
-  } else {
-    return `${Math.abs(daysDiff)}日超過`;
-  }
-}
 
 export function TaskDetailView({ task }: TaskDetailViewProps) {
   const getStatusDisplay = (status: string) => {

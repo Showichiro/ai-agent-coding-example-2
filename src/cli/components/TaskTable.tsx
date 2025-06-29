@@ -1,52 +1,13 @@
 import { Box, Text } from 'ink';
 import React, { useState, useEffect } from 'react';
-import { differenceInDays, isToday, isPast } from 'date-fns';
 import { Task } from '../../core/domain/task';
+import { formatRelativeDate, formatDate, getDueDateColor } from '../utils/date-utils';
 
 interface TaskTableProps {
   tasks: Task[];
   selectedIndex: number;
 }
 
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-}
-
-function formatRelativeDate(date: Date): string {
-  if (isToday(date)) {
-    return '今日';
-  }
-  
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  const targetDate = new Date(date);
-  targetDate.setHours(0, 0, 0, 0);
-  
-  const daysDiff = differenceInDays(targetDate, today);
-  
-  if (daysDiff > 0) {
-    return `あと${daysDiff}日`;
-  } else {
-    return `${Math.abs(daysDiff)}日超過`;
-  }
-}
-
-function getDueDateColor(date: Date): 'red' | 'yellow' | undefined {
-  if (isToday(date)) {
-    return 'yellow';
-  }
-  
-  if (isPast(date)) {
-    return 'red';
-  }
-  
-  return undefined;
-}
 
 const statusConfig = {
   todo: { emoji: '⚪️', label: 'Todo', color: undefined },

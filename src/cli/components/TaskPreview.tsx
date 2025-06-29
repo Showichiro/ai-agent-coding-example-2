@@ -1,19 +1,10 @@
 import { Box, Text } from 'ink';
 import React from 'react';
 import { Task } from '../../core/domain/task';
+import { formatDateTime } from '../utils/date-utils';
 
 interface TaskPreviewProps {
   task: Task | null;
-}
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
 }
 
 export function TaskPreview({ task }: TaskPreviewProps) {
@@ -41,11 +32,11 @@ export function TaskPreview({ task }: TaskPreviewProps) {
       )}
       <Box>
         <Text bold>Created: </Text>
-        <Text>{formatDate(task.createdAt)}</Text>
+        <Text>{formatDateTime(task.createdAt)}</Text>
       </Box>
       <Box>
         <Text bold>Updated: </Text>
-        <Text>{formatDate(task.updatedAt)}</Text>
+        <Text>{formatDateTime(task.updatedAt)}</Text>
       </Box>
     </Box>
   );
