@@ -2,6 +2,7 @@ import { Box, Text } from 'ink';
 import React, { useState, useEffect } from 'react';
 import { Task } from '../../core/domain/task';
 import { formatRelativeDate, formatDate, getDueDateColor } from '../utils/date-utils';
+import { statusConfig, getStatusDisplay } from '../utils/status-utils';
 
 interface TaskTableProps {
   tasks: Task[];
@@ -9,16 +10,6 @@ interface TaskTableProps {
 }
 
 
-const statusConfig = {
-  todo: { emoji: '⚪️', label: 'Todo', color: undefined },
-  in_progress: { emoji: '🟡', label: 'In Progress', color: 'yellow' },
-  done: { emoji: '✅', label: 'Done', color: 'green' },
-} as const;
-
-function getStatusDisplay(status: Task['status']): string {
-  const config = statusConfig[status];
-  return `${config.emoji} ${config.label}`;
-}
 
 interface ColumnLayout {
   id: number;

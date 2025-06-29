@@ -2,6 +2,7 @@ import { Box, Text } from 'ink';
 import React from 'react';
 import { Task } from '../../core/domain/task';
 import { formatRelativeDate } from '../utils/date-utils';
+import { getStatusConfig } from '../utils/status-utils';
 
 interface TaskDetailViewProps {
   task: Task;
@@ -9,20 +10,7 @@ interface TaskDetailViewProps {
 
 
 export function TaskDetailView({ task }: TaskDetailViewProps) {
-  const getStatusDisplay = (status: string) => {
-    switch (status) {
-      case 'todo':
-        return { emoji: '⚪️', text: 'Todo', color: 'white' };
-      case 'in_progress':
-        return { emoji: '🟡', text: 'In Progress', color: 'yellow' };
-      case 'done':
-        return { emoji: '✅', text: 'Done', color: 'green' };
-      default:
-        return { emoji: '⚪️', text: status, color: 'white' };
-    }
-  };
-
-  const statusDisplay = getStatusDisplay(task.status);
+  const statusDisplay = getStatusConfig(task.status);
   const dueDateDisplay = task.dueDate ? formatRelativeDate(task.dueDate) : 'Not set';
 
   return (
@@ -47,7 +35,7 @@ export function TaskDetailView({ task }: TaskDetailViewProps) {
         <Box>
           <Text bold>Status: </Text>
           <Text color={statusDisplay.color as any}>
-            {statusDisplay.emoji} {statusDisplay.text}
+            {statusDisplay.emoji} {statusDisplay.label}
           </Text>
         </Box>
 
