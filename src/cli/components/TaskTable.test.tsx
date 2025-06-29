@@ -51,9 +51,9 @@ describe('TaskTable', () => {
 
     const { lastFrame } = render(<TaskTable tasks={tasks} selectedIndex={0} />);
     
-    // The actual output shows truncation happens at word boundaries
-    expect(lastFrame()).toContain('This is a very long task');
-    expect(lastFrame()).not.toContain('title that should be truncated');
+    // The actual output shows truncation happens at 20 characters due to width adjustment
+    expect(lastFrame()).toContain('This is a very long');
+    expect(lastFrame()).not.toContain('task title that should be truncated');
   });
 
   it('should format dates correctly', () => {
@@ -85,5 +85,19 @@ describe('TaskTable', () => {
     expect(lastFrame()).toContain('Todo');
     expect(lastFrame()).toContain('In Progress');
     expect(lastFrame()).toContain('Done');
+  });
+
+  it('should display status with emoji icons', () => {
+    const tasks = [
+      createTask({ title: 'Todo task' }),
+      { ...createTask({ title: 'In progress task' }), status: 'in_progress' as const },
+      { ...createTask({ title: 'Done task' }), status: 'done' as const },
+    ];
+
+    const { lastFrame } = render(<TaskTable tasks={tasks} selectedIndex={0} />);
+    
+    expect(lastFrame()).toContain('⚪️ Todo');
+    expect(lastFrame()).toContain('🟡 In Progress');
+    expect(lastFrame()).toContain('✅ Done');
   });
 });

@@ -18,11 +18,11 @@ function formatDate(date: Date): string {
 function getStatusDisplay(status: Task['status']): string {
   switch (status) {
     case 'todo':
-      return 'Todo';
+      return '⚪️ Todo';
     case 'in_progress':
-      return 'In Progress';
+      return '🟡 In Progress';
     case 'done':
-      return 'Done';
+      return '✅ Done';
   }
 }
 
@@ -34,10 +34,10 @@ export function TaskTable({ tasks, selectedIndex }: TaskTableProps) {
         <Box width="5%">
           <Text bold>ID</Text>
         </Box>
-        <Box width="30%">
+        <Box width="25%">
           <Text bold>Title</Text>
         </Box>
-        <Box width="15%">
+        <Box width="20%">
           <Text bold>Status</Text>
         </Box>
         <Box width="15%">
@@ -63,12 +63,12 @@ export function TaskTable({ tasks, selectedIndex }: TaskTableProps) {
                 {index + 1}
               </Text>
             </Box>
-            <Box width="30%">
+            <Box width="25%">
               <Text color={isSelected ? 'blue' : undefined} inverse={isSelected}>
-                {task.title.length > 25 ? `${task.title.substring(0, 25)}...` : task.title}
+                {task.title.length > 20 ? `${task.title.substring(0, 20)}...` : task.title}
               </Text>
             </Box>
-            <Box width="15%">
+            <Box width="20%">
               <Text color={isSelected ? 'blue' : undefined} inverse={isSelected}>
                 {getStatusDisplay(task.status)}
               </Text>
