@@ -22,6 +22,6 @@ describe('HelpFooter', () => {
     
     // Verify the component renders without errors
     expect(lastFrame()).toBeTruthy();
-    expect(lastFrame().length).toBeGreaterThan(0);
+    expect(lastFrame()?.length).toBeGreaterThan(0);
   });
 });
