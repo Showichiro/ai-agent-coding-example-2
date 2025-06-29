@@ -1,0 +1,43 @@
+{
+  "name": "ai-agent-coding-example-2",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "private": "true",
+  "scripts": {
+    "start": "tsx src/cli/index",
+    "dev": "tsx watch src/cli/index",
+    "lint": "biome lint --write .",
+    "build": "tsc",
+    "format": "biome format --write .",
+    "example:ink": "tsx examples/01-ink.tsx",
+    "example:counter": "tsx examples/02-counter.tsx",
+    "example:suspense": "tsx examples/03-suspense.tsx",
+    "example:table": "tsx examples/04-table.tsx",
+    "example:input": "tsx examples/05-input.tsx",
+    "example:justify-content": "tsx examples/06-justify-content.tsx",
+    "test": "vitest run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.12.1",
+  "devDependencies": {
+    "@biomejs/biome": "2.0.6",
+    "@faker-js/faker": "^9.8.0",
+    "@types/node": "^24.0.7",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "ink-testing-library": "^4.0.0",
+    "jsdom": "^26.1.0",
+    "tsx": "^4.20.3",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "ink": "^6.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.25.67"
+  }
+}

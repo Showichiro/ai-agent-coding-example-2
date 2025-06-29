@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "typescript": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "--scope",
+        "local",
+        "--",
+        "@mizchi/lsmcp",
+        "--language=typescript"
+      ]
+    }
+  }
+}
