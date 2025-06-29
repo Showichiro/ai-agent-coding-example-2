@@ -22,7 +22,7 @@ export function TodoApp() {
   const [mode, setMode] = useState<AppMode>('list');
   const [currentFilter, setCurrentFilter] = useState<FilterType>('all');
   const [currentSort, setCurrentSort] = useState<SortType>('created');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  const [sortOrder, _setSortOrder] = useState<SortOrder>('asc');
   const [editingTask, setEditingTask] = useState<Task | undefined>();
   const [toastMessage, setToastMessage] = useState<string>('');
   const [toastVisible, setToastVisible] = useState(false);
