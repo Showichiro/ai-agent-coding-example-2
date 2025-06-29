@@ -17,31 +17,41 @@ function formatDate(date: Date): string {
 }
 
 function formatRelativeDate(date: Date): string {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Normalize to start of day
-  
-  const targetDate = new Date(date);
-  targetDate.setHours(0, 0, 0, 0); // Normalize to start of day
-  
   if (isToday(date)) {
     return '今日';
   }
+  
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const targetDate = new Date(date);
+  targetDate.setHours(0, 0, 0, 0);
   
   const daysDiff = differenceInDays(targetDate, today);
   
   if (daysDiff > 0) {
     return `あと${daysDiff}日`;
-  } else if (daysDiff < 0) {
+  } else {
     return `${Math.abs(daysDiff)}日超過`;
   }
+}
+
+function getDueDateColor(date: Date): 'red' | 'yellow' | undefined {
+  if (isToday(date)) {
+    return 'yellow';
+  }
   
-  return '今日';
+  if (isPast(date)) {
+    return 'red';
+  }
+  
+  return undefined;
 }
 
 const statusConfig = {
-  todo: { emoji: '⚪️', label: 'Todo' },
-  in_progress: { emoji: '🟡', label: 'In Progress' },
-  done: { emoji: '✅', label: 'Done' },
+  todo: { emoji: '⚪️', label: 'Todo', color: undefined },
+  in_progress: { emoji: '🟡', label: 'In Progress', color: 'yellow' },
+  done: { emoji: '✅', label: 'Done', color: 'green' },
 } as const;
 
 function getStatusDisplay(status: Task['status']): string {
@@ -92,12 +102,18 @@ export function TaskTable({ tasks, selectedIndex }: TaskTableProps) {
               </Text>
             </Box>
             <Box width="20%">
-              <Text color={isSelected ? 'blue' : undefined} inverse={isSelected}>
+              <Text 
+                color={isSelected ? 'blue' : statusConfig[task.status].color} 
+                inverse={isSelected}
+              >
                 {getStatusDisplay(task.status)}
               </Text>
             </Box>
             <Box width="15%">
-              <Text color={isSelected ? 'blue' : undefined} inverse={isSelected}>
+              <Text 
+                color={isSelected ? 'blue' : (task.dueDate ? getDueDateColor(task.dueDate) : undefined)} 
+                inverse={isSelected}
+              >
                 {task.dueDate ? formatRelativeDate(task.dueDate) : '-'}
               </Text>
             </Box>

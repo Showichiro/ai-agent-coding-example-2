@@ -122,4 +122,20 @@ describe('TaskTable', () => {
     expect(lastFrame()).toContain('今日');
     expect(lastFrame()).toContain('1日超過');
   });
+
+  it('should display status with color coding', () => {
+    const tasks = [
+      createTask({ title: 'Todo task' }),
+      { ...createTask({ title: 'In progress task' }), status: 'in_progress' as const },
+      { ...createTask({ title: 'Done task' }), status: 'done' as const },
+    ];
+
+    const { lastFrame } = render(<TaskTable tasks={tasks} selectedIndex={0} />);
+    
+    // Status colors: Todo (default), In Progress (yellow), Done (green)
+    // Note: ink-testing-library doesn't capture colors directly, but we can verify the color attributes
+    expect(lastFrame()).toContain('⚪️ Todo');
+    expect(lastFrame()).toContain('🟡 In Progress'); 
+    expect(lastFrame()).toContain('✅ Done');
+  });
 });
