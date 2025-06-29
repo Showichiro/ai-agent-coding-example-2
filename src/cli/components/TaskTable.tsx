@@ -1,8 +1,9 @@
 import { Box, Text } from 'ink';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Task } from '../../core/domain/task';
 import { formatRelativeDate, formatDate, getDueDateColor } from '../utils/date-utils';
 import { statusConfig, getStatusDisplay } from '../utils/status-utils';
+import { useTerminalDimensions } from '../hooks/useTerminalDimensions';
 
 interface TaskTableProps {
   tasks: Task[];
@@ -71,27 +72,6 @@ function calculateColumnLayout(terminalWidth: number): ColumnLayout {
     showSeparator: true,
     titleMaxLength: Math.floor(terminalWidth * 0.25) - 3
   };
-}
-
-function useTerminalDimensions() {
-  const [dimensions, setDimensions] = useState({
-    columns: process.stdout.columns || 80,
-    rows: process.stdout.rows || 24
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setDimensions({
-        columns: process.stdout.columns || 80,
-        rows: process.stdout.rows || 24
-      });
-    };
-
-    process.stdout.on('resize', handleResize);
-    return () => process.stdout.off('resize', handleResize);
-  }, []);
-
-  return [dimensions.columns, dimensions.rows] as const;
 }
 
 export function TaskTable({ tasks, selectedIndex }: TaskTableProps) {
