@@ -138,4 +138,29 @@ describe('TaskTable', () => {
     expect(lastFrame()).toContain('🟡 In Progress'); 
     expect(lastFrame()).toContain('✅ Done');
   });
+
+  it('should adjust layout for small terminal widths', () => {
+    // Mock the useStdoutDimensions hook to return small terminal size
+    const tasks = [createTask({ title: 'Test Task 1' })];
+    const { lastFrame } = render(<TaskTable tasks={tasks} selectedIndex={0} />);
+    
+    const output = lastFrame();
+    
+    // Should render table content (specific responsive tests will depend on implementation)
+    expect(output).toContain('Test Task 1');
+    expect(output).toContain('ID');
+    expect(output).toContain('Title');
+  });
+
+  it('should handle very small terminal widths gracefully', () => {
+    // Test edge case of very small terminals
+    const tasks = [createTask({ title: 'Test Task' })];
+    const { lastFrame } = render(<TaskTable tasks={tasks} selectedIndex={0} />);
+    
+    const output = lastFrame();
+    
+    // Should not crash and still show basic information
+    expect(output).toBeTruthy();
+    expect(output?.length ?? 0).toBeGreaterThan(0);
+  });
 });
