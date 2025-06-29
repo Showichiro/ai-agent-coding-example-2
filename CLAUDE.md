@@ -37,13 +37,15 @@ src/
 - **Package Manager**: pnpm
 
 ### Development Methodology
-This project follows **TDD with Tidy First** workflow:
+This project follows **TDD with Tidy First** workflow. The AI agent is expected to autonomously execute the following cycle:
 
 1. **Tidy First** (optional): Clean up existing code structure before adding features
 2. **Red**: Write a failing test that defines new behavior  
 3. **Green**: Write minimal code to make the test pass
-4. **Refactor**: Improve code structure while keeping tests green
-5. **Commit**: Separate commits for behavior changes (`feat:`/`fix:`) vs structure changes (`refactor:`/`tidy:`)
+4. **Commit**: Immediately commit the behavioral change with a `feat:` or `fix:` message.
+5. **Refactor**: Improve code structure while keeping tests green. Commit structural changes with a `refactor:` or `tidy:` message.
+
+This cycle must be applied in the smallest possible increments. The agent should not wait for user prompts to commit or refactor.
 
 ### Functional Programming Guidelines
 - Use **pure functions** for domain logic (no side effects)
