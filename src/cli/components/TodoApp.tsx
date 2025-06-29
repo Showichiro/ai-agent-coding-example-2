@@ -19,9 +19,9 @@ export function TodoApp() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mode, setMode] = useState<AppMode>('list');
-  const [currentFilter, _setCurrentFilter] = useState<FilterType>('all');
-  const [currentSort, _setCurrentSort] = useState<SortType>('created');
-  const [sortOrder, _setSortOrder] = useState<SortOrder>('asc');
+  const [currentFilter, setCurrentFilter] = useState<FilterType>('all');
+  const [currentSort, setCurrentSort] = useState<SortType>('created');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
   const [editingTask, setEditingTask] = useState<Task | undefined>();
 
   // Ctrl+C handling as per React Ink requirements
@@ -92,6 +92,27 @@ export function TodoApp() {
       
       if (key.downArrow && displayedTasks.length > 0) {
         setSelectedIndex(prev => Math.min(displayedTasks.length - 1, prev + 1));
+      }
+      
+      if (input === 'f') {
+        // Toggle filter
+        const filters: FilterType[] = ['all', 'todo', 'in_progress', 'done'];
+        const currentIndex = filters.indexOf(currentFilter);
+        const nextIndex = (currentIndex + 1) % filters.length;
+        setCurrentFilter(filters[nextIndex]);
+        setSelectedIndex(0); // Reset selection when filter changes
+        return;
+      }
+      
+      if (input === 'o') {
+        // Toggle sort
+        if (currentSort === 'created') {
+          setCurrentSort('dueDate');
+        } else {
+          setCurrentSort('created');
+        }
+        setSelectedIndex(0); // Reset selection when sort changes
+        return;
       }
     }
   });

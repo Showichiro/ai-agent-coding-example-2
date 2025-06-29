@@ -60,4 +60,19 @@ describe('FilterControls', () => {
     expect(lastFrame()).toContain('[Due Date]');
     expect(lastFrame()).toContain('▼');
   });
+
+  it('should display navigation hints for interactive controls', () => {
+    const { lastFrame } = render(
+      <FilterControls 
+        currentFilter="all" 
+        currentSort="created" 
+        currentOrder="asc" 
+        isInteractive={true}
+      />
+    );
+    
+    expect(lastFrame()).toContain('< all | todo | in_progress | done >');
+    expect(lastFrame()).toContain('[F] Filter');
+    expect(lastFrame()).toContain('[O] Sort');
+  });
 });

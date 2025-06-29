@@ -87,4 +87,30 @@ describe('TodoApp', () => {
     expect(output).toContain('Preview:');
     expect(output).toContain('Select a task to view details');
   });
+
+  it('should support filter cycling with f key', () => {
+    const { lastFrame, stdin } = render(<TodoApp />);
+    
+    // Initially should show "All" filter
+    expect(lastFrame()).toContain('[All]');
+    
+    // Press 'f' to cycle filter
+    stdin.write('f');
+    
+    // Should change to Todo filter
+    expect(lastFrame()).toContain('[Todo]');
+  });
+
+  it('should support sort toggle with o key', () => {
+    const { lastFrame, stdin } = render(<TodoApp />);
+    
+    // Initially should show "Created" sort
+    expect(lastFrame()).toContain('[Created]');
+    
+    // Press 'o' to toggle sort
+    stdin.write('o');
+    
+    // Should change to Due Date sort
+    expect(lastFrame()).toContain('[Due Date]');
+  });
 });
