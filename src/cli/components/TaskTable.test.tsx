@@ -62,7 +62,9 @@ describe('TaskTable', () => {
 
     const { lastFrame } = render(<TaskTable tasks={tasks} selectedIndex={0} />);
     
-    expect(lastFrame()).toContain('12/31/2024');
+    // Due date now shows relative format, created date still shows absolute format
+    expect(lastFrame()).toContain('日超過'); // Overdue task
+    expect(lastFrame()).toContain('06/30/2025'); // Created date in absolute format
   });
 
   it('should show dash for tasks without due date', () => {
@@ -99,5 +101,25 @@ describe('TaskTable', () => {
     expect(lastFrame()).toContain('⚪️ Todo');
     expect(lastFrame()).toContain('🟡 In Progress');
     expect(lastFrame()).toContain('✅ Done');
+  });
+
+  it('should display relative due date format', () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    
+    const tasks = [
+      createTask({ title: 'Due tomorrow', dueDate: tomorrow }),
+      createTask({ title: 'Due today', dueDate: today }),
+      createTask({ title: 'Overdue', dueDate: yesterday }),
+    ];
+
+    const { lastFrame } = render(<TaskTable tasks={tasks} selectedIndex={0} />);
+    
+    expect(lastFrame()).toContain('あと1日');
+    expect(lastFrame()).toContain('今日');
+    expect(lastFrame()).toContain('1日超過');
   });
 });

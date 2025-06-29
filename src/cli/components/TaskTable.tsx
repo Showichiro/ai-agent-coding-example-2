@@ -1,5 +1,6 @@
 import { Box, Text } from 'ink';
 import React from 'react';
+import { differenceInDays, isToday, isPast } from 'date-fns';
 import { Task } from '../../core/domain/task';
 
 interface TaskTableProps {
@@ -13,6 +14,28 @@ function formatDate(date: Date): string {
     month: '2-digit',
     day: '2-digit',
   });
+}
+
+function formatRelativeDate(date: Date): string {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Normalize to start of day
+  
+  const targetDate = new Date(date);
+  targetDate.setHours(0, 0, 0, 0); // Normalize to start of day
+  
+  if (isToday(date)) {
+    return '今日';
+  }
+  
+  const daysDiff = differenceInDays(targetDate, today);
+  
+  if (daysDiff > 0) {
+    return `あと${daysDiff}日`;
+  } else if (daysDiff < 0) {
+    return `${Math.abs(daysDiff)}日超過`;
+  }
+  
+  return '今日';
 }
 
 const statusConfig = {
@@ -75,7 +98,7 @@ export function TaskTable({ tasks, selectedIndex }: TaskTableProps) {
             </Box>
             <Box width="15%">
               <Text color={isSelected ? 'blue' : undefined} inverse={isSelected}>
-                {task.dueDate ? formatDate(task.dueDate) : '-'}
+                {task.dueDate ? formatRelativeDate(task.dueDate) : '-'}
               </Text>
             </Box>
             <Box width="15%">
