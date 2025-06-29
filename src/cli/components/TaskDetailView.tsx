@@ -1,23 +1,26 @@
-import { Box, Text } from 'ink';
-import React from 'react';
-import { Task } from '../../core/domain/task';
-import { formatRelativeDate } from '../utils/date-utils';
-import { getStatusConfig } from '../utils/status-utils';
+import { Box, Text } from "ink";
+import React from "react";
+import { Task } from "../../core/domain/task";
+import { formatRelativeDate } from "../utils/date-utils";
+import { getStatusConfig } from "../utils/status-utils";
 
 interface TaskDetailViewProps {
   task: Task;
 }
 
-
 export function TaskDetailView({ task }: TaskDetailViewProps) {
   const statusDisplay = getStatusConfig(task.status);
-  const dueDateDisplay = task.dueDate ? formatRelativeDate(task.dueDate) : 'Not set';
+  const dueDateDisplay = task.dueDate
+    ? formatRelativeDate(task.dueDate)
+    : "Not set";
 
   return (
     <Box flexDirection="column" padding={2}>
       {/* Header */}
       <Box justifyContent="center" marginBottom={2}>
-        <Text bold fontSize={18}>Task Details</Text>
+        <Text bold fontSize={18}>
+          Task Details
+        </Text>
       </Box>
 
       {/* Task Information */}
@@ -34,14 +37,14 @@ export function TaskDetailView({ task }: TaskDetailViewProps) {
 
         <Box>
           <Text bold>Status: </Text>
-          <Text color={statusDisplay.color as any}>
+          <Text color={statusDisplay.color}>
             {statusDisplay.emoji} {statusDisplay.label}
           </Text>
         </Box>
 
         <Box>
           <Text bold>Description: </Text>
-          <Text>{task.description || 'No description provided'}</Text>
+          <Text>{task.description || "No description provided"}</Text>
         </Box>
 
         <Box>
@@ -62,9 +65,7 @@ export function TaskDetailView({ task }: TaskDetailViewProps) {
 
       {/* Footer */}
       <Box marginTop={2} justifyContent="center">
-        <Text bold>
-          [Esc] Back to List
-        </Text>
+        <Text bold>[Esc] Back to List</Text>
       </Box>
     </Box>
   );

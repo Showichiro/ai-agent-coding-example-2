@@ -1,5 +1,5 @@
-import { Box, Text } from 'ink';
-import React, { useEffect } from 'react';
+import { Box, Text } from "ink";
+import React, { useEffect } from "react";
 
 interface ToastNotificationProps {
   message: string;
@@ -8,11 +8,11 @@ interface ToastNotificationProps {
   timeout?: number;
 }
 
-export function ToastNotification({ 
-  message, 
-  isVisible, 
-  onHide, 
-  timeout = 2000 
+export function ToastNotification({
+  message,
+  isVisible,
+  onHide,
+  timeout = 2000,
 }: ToastNotificationProps) {
   useEffect(() => {
     if (isVisible && onHide) {

@@ -1,6 +1,6 @@
-export type TaskStatus = 'todo' | 'in_progress' | 'done';
+export type TaskStatus = "todo" | "in_progress" | "done";
 
-export type TaskId = string & { readonly _brand: 'TaskId' };
+export type TaskId = string & { readonly _brand: "TaskId" };
 
 export function createTaskId(id: string): TaskId {
   return id as TaskId;
@@ -32,13 +32,15 @@ export type UpdateTaskInput = {
 
 export function createTask(input: CreateTaskInput): Task {
   const now = new Date();
-  const id = createTaskId(`task-${Date.now()}-${Math.random().toString(36).substring(2)}`);
-  
+  const id = createTaskId(
+    `task-${Date.now()}-${Math.random().toString(36).substring(2)}`,
+  );
+
   return {
     id,
     title: input.title,
     description: input.description,
-    status: 'todo',
+    status: "todo",
     dueDate: input.dueDate,
     createdAt: now,
     updatedAt: now,

@@ -1,128 +1,128 @@
-import { render } from 'ink-testing-library';
-import React from 'react';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { TodoApp } from './TodoApp';
+import { render } from "ink-testing-library";
+import React from "react";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { TodoApp } from "./TodoApp";
 
-describe('TodoApp', () => {
+describe("TodoApp", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should render app title', () => {
+  it("should render app title", () => {
     const { lastFrame } = render(<TodoApp />);
-    
-    expect(lastFrame()).toContain('TODO App');
+
+    expect(lastFrame()).toContain("TODO App");
   });
 
-  it('should render filter controls', () => {
+  it("should render filter controls", () => {
     const { lastFrame } = render(<TodoApp />);
-    
-    expect(lastFrame()).toContain('Filter:');
-    expect(lastFrame()).toContain('Sort:');
+
+    expect(lastFrame()).toContain("Filter:");
+    expect(lastFrame()).toContain("Sort:");
   });
 
-  it('should render task table', () => {
+  it("should render task table", () => {
     const { lastFrame } = render(<TodoApp />);
-    
-    expect(lastFrame()).toContain('ID');
-    expect(lastFrame()).toContain('Title');
-    expect(lastFrame()).toContain('Status');
-    expect(lastFrame()).toContain('Due Date');
-    expect(lastFrame()).toContain('Created');
+
+    expect(lastFrame()).toContain("ID");
+    expect(lastFrame()).toContain("Title");
+    expect(lastFrame()).toContain("Status");
+    expect(lastFrame()).toContain("Due Date");
+    expect(lastFrame()).toContain("Created");
   });
 
-  it('should render help footer', () => {
+  it("should render help footer", () => {
     const { lastFrame } = render(<TodoApp />);
-    
-    expect(lastFrame()).toContain('[N]ew');
-    expect(lastFrame()).toContain('[Q]uit');
+
+    expect(lastFrame()).toContain("[N]ew");
+    expect(lastFrame()).toContain("[Q]uit");
   });
 
-  it('should show empty state initially', () => {
+  it("should show empty state initially", () => {
     const { lastFrame } = render(<TodoApp />);
-    
-    expect(lastFrame()).toContain('No tasks found');
+
+    expect(lastFrame()).toContain("No tasks found");
   });
 
-  it('should handle Ctrl+C for exit', () => {
+  it("should handle Ctrl+C for exit", () => {
     const { lastFrame, stdin } = render(<TodoApp />);
-    
+
     // This test verifies the component renders without crashing
     // The actual Ctrl+C handling will be tested in integration tests
     expect(lastFrame()).toBeTruthy();
-    expect(typeof stdin.write).toBe('function');
+    expect(typeof stdin.write).toBe("function");
   });
 
-  it('should initialize with default state', () => {
+  it("should initialize with default state", () => {
     const { lastFrame } = render(<TodoApp />);
-    
+
     // Should show "All" filter by default
-    expect(lastFrame()).toContain('[All]');
+    expect(lastFrame()).toContain("[All]");
     // Should show tasks in created date order by default
-    expect(lastFrame()).toContain('[Created]');
+    expect(lastFrame()).toContain("[Created]");
   });
 
-  it('should render main layout structure', () => {
+  it("should render main layout structure", () => {
     const { lastFrame } = render(<TodoApp />);
-    
+
     const output = lastFrame();
-    
+
     // Verify all main sections are present
-    expect(output).toContain('TODO App'); // Header
-    expect(output).toContain('Filter:'); // Filter controls
-    expect(output).toContain('Sort:'); // Sort controls  
-    expect(output).toContain('ID'); // Table header
-    expect(output).toContain('[N]ew'); // Help footer
-    
+    expect(output).toContain("TODO App"); // Header
+    expect(output).toContain("Filter:"); // Filter controls
+    expect(output).toContain("Sort:"); // Sort controls
+    expect(output).toContain("ID"); // Table header
+    expect(output).toContain("[N]ew"); // Help footer
+
     // Should have proper structure
     expect(output?.length ?? 0).toBeGreaterThan(100); // Non-trivial output
   });
 
-  it('should display task preview pane', () => {
+  it("should display task preview pane", () => {
     const { lastFrame } = render(<TodoApp />);
-    
+
     const output = lastFrame();
-    
+
     // Should show preview pane (even in empty state)
-    expect(output).toContain('Preview:');
-    expect(output).toContain('Select a task to view details');
+    expect(output).toContain("Preview:");
+    expect(output).toContain("Select a task to view details");
   });
 
-  it('should support filter cycling with f key', () => {
+  it("should support filter cycling with f key", () => {
     const { lastFrame, stdin } = render(<TodoApp />);
-    
+
     // Initially should show "All" filter
-    expect(lastFrame()).toContain('[All]');
-    
+    expect(lastFrame()).toContain("[All]");
+
     // Press 'f' to cycle filter
-    stdin.write('f');
-    
+    stdin.write("f");
+
     // Should change to Todo filter
-    expect(lastFrame()).toContain('[Todo]');
+    expect(lastFrame()).toContain("[Todo]");
   });
 
-  it('should support sort toggle with o key', () => {
+  it("should support sort toggle with o key", () => {
     const { lastFrame, stdin } = render(<TodoApp />);
-    
+
     // Initially should show "Created" sort
-    expect(lastFrame()).toContain('[Created]');
-    
+    expect(lastFrame()).toContain("[Created]");
+
     // Press 'o' to toggle sort
-    stdin.write('o');
-    
+    stdin.write("o");
+
     // Should change to Due Date sort
-    expect(lastFrame()).toContain('[Due Date]');
+    expect(lastFrame()).toContain("[Due Date]");
   });
 
-  it('should handle Enter key for detailed view mode when no tasks exist', () => {
+  it("should handle Enter key for detailed view mode when no tasks exist", () => {
     const { lastFrame, stdin } = render(<TodoApp />);
-    
+
     // Press Enter when no tasks exist - should not crash
-    stdin.write('\r');
-    
+    stdin.write("\r");
+
     // Should remain in list view
     const output = lastFrame();
-    expect(output).toContain('TODO App');
-    expect(output).toContain('No tasks found');
+    expect(output).toContain("TODO App");
+    expect(output).toContain("No tasks found");
   });
 });

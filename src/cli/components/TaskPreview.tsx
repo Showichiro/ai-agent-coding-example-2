@@ -1,7 +1,7 @@
-import { Box, Text } from 'ink';
-import React from 'react';
-import { Task } from '../../core/domain/task';
-import { formatDateTime } from '../utils/date-utils';
+import { Box, Text } from "ink";
+import React from "react";
+import { Task } from "../../core/domain/task";
+import { formatDateTime } from "../utils/date-utils";
 
 interface TaskPreviewProps {
   task: Task | null;
