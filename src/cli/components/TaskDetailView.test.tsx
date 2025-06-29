@@ -65,9 +65,9 @@ describe("TaskDetailView", () => {
 
   it("should display different status types correctly", () => {
     const inProgressTask = createTask({ title: "In Progress Task" });
-    inProgressTask.status = "in_progress";
+    const updatedTask = { ...inProgressTask, status: "in_progress" as const };
 
-    const { lastFrame } = render(<TaskDetailView task={inProgressTask} />);
+    const { lastFrame } = render(<TaskDetailView task={updatedTask} />);
 
     expect(lastFrame()).toContain("🟡 In Progress");
   });

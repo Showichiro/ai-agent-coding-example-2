@@ -19,7 +19,9 @@ export function useTerminalDimensions() {
     };
 
     process.stdout.on("resize", handleResize);
-    return () => process.stdout.off("resize", handleResize);
+    return () => {
+      process.stdout.off("resize", handleResize);
+    };
   }, []);
 
   return [dimensions.columns, dimensions.rows] as const;

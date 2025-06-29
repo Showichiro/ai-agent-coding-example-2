@@ -18,7 +18,7 @@ export function TaskDetailView({ task }: TaskDetailViewProps) {
     <Box flexDirection="column" padding={2}>
       {/* Header */}
       <Box justifyContent="center" marginBottom={2}>
-        <Text bold fontSize={18}>
+        <Text bold>
           Task Details
         </Text>
       </Box>
