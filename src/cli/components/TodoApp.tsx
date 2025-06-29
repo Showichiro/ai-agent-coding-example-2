@@ -7,6 +7,7 @@ import { FilterControls } from './FilterControls';
 import { HelpFooter } from './HelpFooter';
 import { TaskForm } from './TaskForm';
 import { TaskPreview } from './TaskPreview';
+import { ToastNotification } from './ToastNotification';
 
 type AppMode = 'list' | 'create' | 'edit' | 'delete';
 type FilterType = TaskStatus | 'all';
@@ -23,6 +24,8 @@ export function TodoApp() {
   const [currentSort, setCurrentSort] = useState<SortType>('created');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
   const [editingTask, setEditingTask] = useState<Task | undefined>();
+  const [toastMessage, setToastMessage] = useState<string>('');
+  const [toastVisible, setToastVisible] = useState(false);
 
   // Ctrl+C handling as per React Ink requirements
   useEffect(() => {
@@ -83,6 +86,7 @@ export function TodoApp() {
         
         const updatedTask = updateTask(task, { id: task.id, status: nextStatus });
         setTasks(prev => prev.map(t => t.id === task.id ? updatedTask : t));
+        showToast(`Status changed to ${nextStatus.replace('_', ' ')}`);
         return;
       }
       
@@ -117,11 +121,22 @@ export function TodoApp() {
     }
   });
 
+  // Toast notification helper
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setToastVisible(true);
+  };
+
+  const hideToast = () => {
+    setToastVisible(false);
+  };
+
   // Task operations
   const handleCreateTask = (input: CreateTaskInput) => {
     const newTask = createTask(input);
     setTasks(prev => [...prev, newTask]);
     setMode('list');
+    showToast('Task created successfully');
   };
 
   const handleEditTask = (input: CreateTaskInput) => {
@@ -137,6 +152,7 @@ export function TodoApp() {
     setTasks(prev => prev.map(t => t.id === editingTask.id ? updatedTask : t));
     setEditingTask(undefined);
     setMode('list');
+    showToast('Task updated');
   };
 
   const handleCancel = () => {
@@ -192,6 +208,13 @@ export function TodoApp() {
       {/* Task Preview */}
       <TaskPreview 
         task={displayedTasks.length > 0 ? displayedTasks[selectedIndex] : null} 
+      />
+
+      {/* Toast Notification */}
+      <ToastNotification 
+        message={toastMessage}
+        isVisible={toastVisible}
+        onHide={hideToast}
       />
 
       {/* Help Footer */}
