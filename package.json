@@ -16,6 +16,7 @@
     "example:table": "tsx examples/04-table.tsx",
     "example:input": "tsx examples/05-input.tsx",
     "example:justify-content": "tsx examples/06-justify-content.tsx",
+    "example:todo-app": "tsx examples/08-todo-app.tsx",
     "test": "vitest run"
   },
   "keywords": [],
